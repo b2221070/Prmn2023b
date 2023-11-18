@@ -34,10 +34,24 @@ public class PreExamDAO {
 
     public int deletePreExam(String gakusekiCode)throws SQLException {
         String sql = "delete from 学生情報 where 学生コード = ?";
-        int n=0;
+        int n = 0;
         try(Connection conn = DriverManager.getConnection(URL,USER_NAME,USER_PASS);PreparedStatement stmt = conn.prepareStatement(sql)){
             stmt.setString(1,gakusekiCode);
             n=stmt.executeUpdate();
+        }
+        return n;
+    }
+
+    public int insertPreExam(String gakusekiCode,String familyName,String firstName,int point)throws SQLException{
+        String sql = "insert into 学生情報 values(?,?,?,?)";
+        int n = 0;
+        try(Connection conn = DriverManager.getConnection(URL,USER_NAME,USER_PASS);
+            PreparedStatement stmt = conn.prepareStatement(sql)){
+            stmt.setString(1,gakusekiCode);
+            stmt.setString(2,familyName);
+            stmt.setString(3,firstName);
+            stmt.setInt(4,point);
+            n = stmt.executeUpdate();
         }
         return n;
     }
